@@ -1,11 +1,9 @@
 package com.codecool.jpa_intro.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -19,14 +17,16 @@ public class Season {
     @GeneratedValue
     private Long id;
 
-    public Long seriesId;
-
     private int title;
 
     @Transient
     private int transientInt;
 
-    @OneToOne(mappedBy = "Id")
+    @Singular
+    @OneToMany(mappedBy = "season", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Set<Episode> episodes;
+
+    @ManyToOne
     private Series series;
 
 }

@@ -1,13 +1,11 @@
 package com.codecool.jpa_intro.Entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -34,6 +32,8 @@ public class Series {
     @Enumerated(EnumType.STRING)
     private Rating rating;
 
-    @OneToOne
-    private Season season;
+    @Singular
+    @OneToMany(mappedBy = "series", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @EqualsAndHashCode.Exclude
+    private Set<Season> seasons;
 }
